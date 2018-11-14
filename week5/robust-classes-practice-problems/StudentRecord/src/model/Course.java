@@ -11,6 +11,7 @@ public class Course {
     private List<Course> prereq;
     private int enrollment;
     private double percentage;
+    private boolean completed;
 
     public Course(String faculty, String name,  int enrollment, double pcnt) {
         this.faculty = faculty;
@@ -18,6 +19,7 @@ public class Course {
         this.prereq = new ArrayList<>();
         this.enrollment = enrollment;
         percentage = pcnt;
+        completed = false;
     }
 
     //getters
@@ -26,10 +28,14 @@ public class Course {
     public List<Course> getPrereq() { return this.prereq; }
     public double getGrade() { return this.percentage; }
     public int getEnrollment() { return this.enrollment; }
+    public boolean isCompleted() { return completed; }
 
     public boolean isCourseFull() { return this.enrollment == DEFAULT_MAX_ENROLLMENT; }
     public void addStudent() { this.enrollment++; }
     public void addPrereq(Course c) { this.prereq.add(c); }
+    public void setCompleted(boolean comp){
+        completed = comp;
+    }
 
 
 

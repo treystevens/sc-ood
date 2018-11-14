@@ -5,6 +5,7 @@ import exceptions.GPATooLowException;
 import exceptions.MissingPrereqException;
 import exceptions.NoCoursesTakenException;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Transcript {
@@ -17,36 +18,34 @@ public class Transcript {
     private List<Course> pastCourses;
 
     public Transcript(String studentName, int academicYear, int studentID) {
-        // TODO: complete the implementation of this method
+        name = studentName;
+        year = academicYear;
+        id = studentID;
+
+        gpa = 0;
+        currentCourses = new LinkedList<>();
+        pastCourses = new LinkedList<>();
     }
 
     // getters
     public String getName() {
-        // TODO: complete the implementation of this method
-        return null;
+        return name;
     }
-
     public int getAcademicYear() {
         // TODO: complete the implementation of this method
-        return 0;
+        return year;
     }
-
     public int getId() {
         // TODO: complete the implementation of this method
-        return 0;
+        return id;
     }
-
     public List<Course> getCurrentCourses() {
         // TODO: complete the implementation of this method
-        return null;
+        return currentCourses;
     }
 
     public List<Course> getPastCourses() {
-        // TODO: complete the implementation of this method
-        // HINT: you may need to consider what kind of information a completed
-        // course on a transcript needs to have that the Course class
-        // doesn't already contains
-        return null;
+        return pastCourses;
     }
 
     // EFFECTS: computes cGPA
@@ -57,8 +56,12 @@ public class Transcript {
         //          GPA (4.0 scale) = (total percentage/20) - 1
         //          **Do you need a helper method?**
         
-        // TODO: complete the implementation of this method
-        return 0.0;
+        if(pastCourses.size() == 0){
+            throw new NoCoursesTakenException("No courses taken. Can't compute GPA.");
+        }
+
+        gpa = convertToGPA();
+        return gpa;
     }
 
     // EFFECTS: promotes the student represented by the transcript
@@ -67,9 +70,21 @@ public class Transcript {
     //          if GPA is not over 2.6 on a 4.0 scale, throws GPATooLowException
     //          if no courses have been taken, throws NoCoursesTakenException
     public boolean promoteStudent() throws GPATooLowException, NoCoursesTakenException {
-        
-        // TODO: complete the implementation of this method
-        return false;
+
+        double currentGPA = convertToGPA();
+
+        if(pastCourses.isEmpty()){
+            throw new NoCoursesTakenException("This student has not taken any courses");
+        }
+        else if(currentGPA <= 2.6){
+            throw new GPATooLowException("GPA is too low to promote student");
+        }
+        else{
+            year++;
+            return true;
+        }
+
+
     }
 
 
@@ -77,21 +92,61 @@ public class Transcript {
     // EFFECTS: adds the given course to the list of past courses and returns true,
     //          unless pastCourses contains given course, then does not add and returns false
     public boolean addToPastCourses(Course c) {
-        //TODO: implement this method
-        return false;
+        if(pastCourses.contains(c)){
+            return false;
+        }
+
+        pastCourses.add(c);
+        return true;
     }
 
     // MODIFIES: this
     // EFFECTS: adds a course (c) into the record
     //          if the transcript is missing prerequisites, throws a MissingPrereqException
     //          if the course has no space for more students to register, throws a CourseFullException
-    public boolean addCourse(Course course) throws MissingPrereqException, CourseFullException {
+    public void addCourse(Course course) throws MissingPrereqException, CourseFullException {
         // TODO: implement this method.
         // You have to realize that there are a number of cases that your code needs to consider. What if the course
         // you wish to add has no prerequisites? What if the course you want to add is already full?
         // Careful consideration of these cases will lead to code that is correct
-        return false;
+
+
+        List<Course> preReqCourses = course.getPrereq();
+
+
+        if(course.isCourseFull()){
+            throw new CourseFullException("Course is currently full");
+        }
+        else if(preReqCourses.isEmpty()){
+            currentCourses.add(course);
+            course.addStudent();
+        }
+        else{
+            for(Course c : preReqCourses){
+                if(!pastCourses.contains(c)){
+                    throw new MissingPrereqException("Missing prerequisites to take the course");
+                }
+            }
+
+            currentCourses.add(course);
+            course.addStudent();
+
+        }
+
     }
 
+
+    private double convertToGPA(){
+        double totalGradeSum = 0;
+
+        for(Course c : pastCourses){
+            totalGradeSum += c.getGrade();
+        }
+
+
+        double percentage = totalGradeSum / pastCourses.size();
+
+        return ( percentage / 20 ) - 1;
+    }
 
 }

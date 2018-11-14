@@ -1,5 +1,7 @@
 package test;
 
+import exceptions.ShowingFullException;
+import exceptions.UnderAgeException;
 import model.Movie;
 import model.MovieGoer;
 import model.Ticket;
@@ -40,24 +42,51 @@ public class MovieGoerTest {
 
     @Test
     public void testBuyTicketNoUnderAgeException() {
-       // TODO: implement this test method where you do NOT expect the buyTicket() method to throw UnderAgeException
+
+        try {
+            mg1.buyTicket(m1);
+        } catch (ShowingFullException e) {
+            fail("Should not reach full seating");
+        } catch (UnderAgeException e) {
+            fail("Should not reach exception: Is of age to view the movie");
+        }
+
+        assertEquals(t1, mg1.getTicket());
     }
 
     @Test
     public void testBuyTicketUnderAgeException() {
-        // TODO: implement this test method where you DO expect the buyTicket() method to throw UnderAgeException
+        try {
+            mg2.buyTicket(m1);
+        } catch (UnderAgeException | ShowingFullException e) {
+            System.out.println(e.getMessage());
+        }
+
+        assertEquals(mg2.getTicket(),null);
     }
 
 
     @Test
     public void testBuyTicketNoShowingFullException() {
-        // TODO: implement this test method where you do NOT expect the buyTicket() method to throw ShowingFullException
-    }
+        try {
+            mg1.buyTicket(m1);
+        } catch (UnderAgeException | ShowingFullException e) {
+            fail("This should have not thrown an exception.");
+        }    }
 
     @Test
     public void testBuyTicketShowingFullException() {
-        // TODO: implement this test method where you DO expect the buyTicket() method to throw ShowingFullException
+        while (!m1.isFull()) {
+            m1.addViewer();
+        }
 
+        try {
+            mg1.buyTicket(m1);
+        } catch (UnderAgeException | ShowingFullException e) {
+            System.out.println(e.getMessage());
+        }
+
+        assertEquals(mg1.getTicket(),null);
     }
 
 

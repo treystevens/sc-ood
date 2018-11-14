@@ -1,4 +1,7 @@
 package model;
+import exceptions.ShowingFullException;
+import exceptions.UnderAgeException;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,24 +18,34 @@ public class TicketKiosk {
 
     // getters
     public String getName() {
-        // TODO: complete the implementation of this method
-        return null;
+        return name;
     }
     public List<Movie> getMovies() {
-        // TODO: complete the implementation of this method
-        return null;
+        return movies;
     }
 
     //EFFECTS:  adds the movie to movies, unless it is already in movies.
     //          if add is successful return true, otherwise return false.
     public boolean addMovie(Movie m) {
-        // TODO: complete the implementation of this method
-        return false;
+        if(movies.contains(m)){
+            return false;
+        }
+
+        movies.add(m);
+        return true;
+
     }
 
     //EFFECTS: calls MovieGoer's buyTicket method, passing m as a parameter.
     public boolean sellTicket(MovieGoer mg, Movie m) {
-        // TODO: complete the implementation of this method
+        try{
+            mg.buyTicket(m);
+        }
+        catch (UnderAgeException e) {
+            System.out.println(e.getMessage());
+        } catch (ShowingFullException e) {
+            System.out.println(e.getMessage());
+        }
         return true;
     }
 

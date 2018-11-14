@@ -39,6 +39,18 @@ public class BusFareCard {
     //          and set the fareLoaded field to true
     public void purchaseAdultFare() throws IllegalAgeException, NoBalanceException {
         //TODO: complete the implementation of this method
+
+        if(ownerAge < AGE_CUTOFF){
+            throw new IllegalAgeException("Too young to purchase an adult ticket.");
+        }
+        else if(balance < 0){
+            throw new NoBalanceException("Sorry, you do not have enough in your balance to purchase a ticket.");
+        }
+        else{
+            balance -= ADULT_FARE;
+            fareLoaded = true;
+        }
+
     }
 
     // MODIFIES: this
@@ -48,6 +60,17 @@ public class BusFareCard {
     //          and set the fareLoaded field to true
     public void purchaseConcessionTicket() throws IllegalAgeException, NoBalanceException {
         //TODO: complete the implementation of this method
+
+        if(ownerAge > AGE_CUTOFF){
+            throw new IllegalAgeException("Too old to purchase a concession ticket.");
+        }
+        else if(balance < 0){
+            throw new NoBalanceException("Sorry, you do not have enough in your balance to purchase a ticket.");
+        }
+        else{
+            balance -= CONCESSION_FARE;
+            fareLoaded = true;
+        }
     }
 
     // MODIFIES: this
@@ -55,6 +78,13 @@ public class BusFareCard {
     //          otherwise: loads the specified amount onto the card's balance field
     public void reloadBalance(double amount) throws IllegalAmountException {
         //TODO: complete the implementation of this method
+        if(balance <= 0){
+            throw new IllegalAmountException("Sorry, the amount you tried to reload cannot be completed.");
+        }
+
+        balance += amount;
+
+
     }
 
     // MODIFIES: this
@@ -62,6 +92,13 @@ public class BusFareCard {
     //          otherwise, sets fareLoaded to false
     public void boardBus() throws MissingFareException {
         //TODO: complete the implementation of this method
+
+        if(!fareLoaded){
+            throw new MissingFareException("You do not have fare loaded.");
+        }
+
+        fareLoaded = false;
+
     }
 
 

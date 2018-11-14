@@ -1,9 +1,40 @@
 package main;
 
+import model.CoffeeMaker;
+import model.exceptions.*;
+
 public class Main {
 
     public static void main(String[] args){
-        // TODO: complete the implementation of Main
+
+        CoffeeMaker cm = new CoffeeMaker();
+
+
+        try{
+            cm.brew(2.70, 12.4);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+        cm.getCupsRemaining();
+
+        try{
+            cm.pourCoffee();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+        cm.setTimeSinceLastBrew(5);
+
+        System.out.println("End of program.");
+
+
+
+
     }
 
 

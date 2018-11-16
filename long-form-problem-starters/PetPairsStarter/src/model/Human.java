@@ -2,10 +2,14 @@ package model;
 
 import model.pets.Pet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Human {
     private String name;
     private double spendibees;
+    private List<Pet> pets = new ArrayList<>();
 
     public Human(String name) {
         this.name = name;
@@ -61,8 +65,14 @@ public class Human {
 
     //EFFECTS: returns the number of pets belonging to species
     public int numPetsOfSpecies(String species) {
-        //TODO 6
-        return 0;
+
+        int total = 0;
+        for(Pet p: pets) {
+            if (p.getSpecies().equals(species)) {
+                total++;
+            }
+        }
+        return total;
     }
 
 }

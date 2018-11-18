@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Chef {
 
     private static final String PREFIX = "CHEF - ";
@@ -29,11 +31,13 @@ public class Chef {
     //EFFECTS: prints out the ingredients being prepared
     private void prepareIngredients() {
         System.out.println(PREFIX + "Slicing tomatoes... Shredding lettuce...");
+        System.out.println(PREFIX + "Mashing avocado! Yum!");
     }
 
     //EFFECTS: prints out the recipe being followed
     private void followRecipe() {
         System.out.println(PREFIX + "Stacking meat... Placing veggies.... ");
+        System.out.println(PREFIX + "Pouring sriracha! Spreading avocado! Trendy!");
     }
 
     //EFFECTS: prints out a message about cooking food
@@ -48,5 +52,15 @@ public class Chef {
         System.out.print(PREFIX + "Plated order: ");
         order.print();
         this.order = null;
+    }
+
+    //EFFECTS: returns the recipe to follow for this order
+    public String getRecipe() {
+        return "";
+    }
+
+    //EFFECTS: returns a list of ingredients needed for this order
+    public List<String> getIngredients() {
+        return null;
     }
 }

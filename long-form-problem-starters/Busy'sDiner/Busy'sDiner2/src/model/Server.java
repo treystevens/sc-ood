@@ -11,10 +11,12 @@ public class Server {
     private List<Order> orders;
     private double cash;
     private int currentOrderNumber;
+    private Dish dish;
 
-    public Server() {
+    public Server(Dish dish) {
         this.orders = new ArrayList<>();
         currentOrderNumber = 100;
+        this.dish = dish;
     }
 
 
@@ -29,7 +31,7 @@ public class Server {
     //EFFECTS: creates new order with the dish on the menu
     public Order takeOrder() { //5: signature
         System.out.println(PREFIX + "Taking order...");
-        Order o = new Order("Turkey club sandwich", currentOrderNumber++);
+        Order o = new Order(dish, currentOrderNumber++);
         orders.add(o);
         System.out.print("Order taken: ");
         o.print();

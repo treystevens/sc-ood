@@ -4,6 +4,8 @@ import model.Monster;
 import model.Room;
 import model.Treasure;
 
+import java.sql.Ref;
+
 public class MonsterMaze {
 
     public static void main(String[] args) throws InterruptedException {
@@ -22,22 +24,22 @@ public class MonsterMaze {
 
         m3.setTreasure(t1);
 
-        r1.addRoom(r2);
-        r1.addRoom(r4);
-        r1.addMonster(m1);
+        r1.addChoice(r2);
+        r1.addChoice(r4);
+        r1.addChoice(m1);
 
-        r2.addRoom(r3);
-        r2.addRoom(r6);
+        r2.addChoice(r3);
+        r2.addChoice(r6);
 
-        r3.addMonster(m3);
+        r3.addChoice(m3);
 
-        r4.addRoom(r5);
+        r4.addChoice(r5);
 
-        r5.addMonster(m2);
+        r5.addChoice(m2);
 
-        r6.addTreasure(t1);
+        r6.addChoice(t1);
 
-        Game g = new Game(r1);
+        RefactoredGame g = new RefactoredGame(r1);
     }
 
 

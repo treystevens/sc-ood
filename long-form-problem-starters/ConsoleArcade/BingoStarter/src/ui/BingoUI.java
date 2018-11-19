@@ -21,14 +21,12 @@ public class BingoUI {
 
 
     public BingoUI() throws InterruptedException {
-
         game = new Game();
         playerCard = new PlayerCard();
 
-        //TODO: change addCard to new method name
-        game.addCard(playerCard);
-        game.addCard(new PlayerCard());
-        game.addCard(new PlayerCard());
+        game.addPlayerCard(playerCard);
+        game.addPlayerCard(new PlayerCard());
+        game.addPlayerCard(new PlayerCard());
 
         stampCounts = new int[game.getCards().size()];
         printGreeting();
@@ -41,13 +39,6 @@ public class BingoUI {
         TimeUnit.MILLISECONDS.sleep(500);
         while(!game.isGameOver()) {
             game.callNext();
-
-            //TODO: remove this loop
-            for (PlayerCard pc : game.getCards()) {
-                pc.checkCallMatch(game.getCurrentCall());
-            }
-            //end todo
-
             System.out.println("\nNumber called: " + formatBingoCall());
             TimeUnit.MILLISECONDS.sleep(1000);
             checkStampsAndUpdate();
@@ -56,9 +47,6 @@ public class BingoUI {
             TimeUnit.MILLISECONDS.sleep(100);
             printPlayerCard(playerCard);
             TimeUnit.MILLISECONDS.sleep(500);
-
-            //TODO: remove this call
-            game.refreshGameOver();
         }
         if (playerCard.hasBingo()){
             System.out.println("\nCongratulations! You win!");

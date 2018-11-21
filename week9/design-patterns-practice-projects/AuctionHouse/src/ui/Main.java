@@ -1,7 +1,7 @@
 package ui;
 
-import model.Auctioneer;
-import model.Bidder;
+import models.Auctioneer;
+import models.Bidder;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -39,18 +39,12 @@ public class Main {
 
     private static void populateAuctionHouse() {
         auctioneer = new Auctioneer("John Smith");
-        b1 = new Bidder("Anthony Estey", 100.00);
-        b2 = new Bidder("Ian Cavers", 55.00);
-        b3 = new Bidder("Elisa Baniassad", 65.00);
-        b4 = new Bidder("James Yoo", 5.00);
-        b5 = new Bidder("Amy Zhu", 5.50);
-        b6 = new Bidder("James Xiao", 8.49);
-        auctioneer.addObserver(b1);
-        auctioneer.addObserver(b2);
-        auctioneer.addObserver(b3);
-        auctioneer.addObserver(b4);
-        auctioneer.addObserver(b5);
-        auctioneer.addObserver(b6);
+        b1 = new Bidder("Anthony Estey", 100.00, auctioneer);
+        b2 = new Bidder("Ian Cavers", 55.00, auctioneer);
+        b3 = new Bidder("Elisa Baniassad", 65.00, auctioneer);
+        b4 = new Bidder("James Yoo", 5.00, auctioneer);
+        b5 = new Bidder("Amy Zhu", 5.50, auctioneer);
+        b6 = new Bidder("James Xiao", 8.49, auctioneer);
         addBiddersToList();
     }
 

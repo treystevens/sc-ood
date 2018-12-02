@@ -10,7 +10,8 @@ import java.util.List;
  */
 public class GangesServiceManager {
 
-    private HashMap<Integer, String> dataStorage;
+    private CloudStorage cloudStorage;
+
     private List<Book> books;
     private List<BookOrder> customerBookOrders;
     private int orderNumberCounter;
@@ -20,7 +21,8 @@ public class GangesServiceManager {
     private static final int FIRST_ORDER_NUMBER = 1000;
 
     public GangesServiceManager() {
-        this.dataStorage = new HashMap<>();
+
+        cloudStorage = new CloudStorage();
 
         this.books = new ArrayList<>();
         books.add(new Book ("A Tale of Two Gentlemen of Verona", 5.99));
@@ -91,17 +93,18 @@ public class GangesServiceManager {
     // MODIFIES: this
     // EFFECTS: Stores the given data in the cloud under this customer's account
     public void putData(Customer c, String data) {
-        dataStorage.put(c.getUniqueId(), data);
+
+        cloudStorage.putData(c, data);
     }
 
     // Returns the given customer's data from the cloud
     public String getData(Customer c) {
-        return dataStorage.get(c.getUniqueId());
+        return cloudStorage.getData(c);
     }
 
     // MODIFIES: this
     // EFFECTS: Deletes this customer's data from the cloud
     public String deleteData(Customer c) {
-        return dataStorage.remove(c.getUniqueId());
+        return cloudStorage.deleteData(c);
     }
 }
